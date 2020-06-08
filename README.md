@@ -1,5 +1,9 @@
 # Mern Stack Application #Devgram  
 
+Links:
+
+1.https://www.sohamkamani.com/blog/javascript/2019-03-29-node-jwt-authentication/#:~:text=In%20order%20to%20verify%20an,the%20JWT%20is%20considered%20valid.
+
 1.  npm install express express-validator jsonwebtoken bcryptjs config gravatar mongoose request --save
 
 2. npm i -D nodemon concurrently
