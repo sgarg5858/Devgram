@@ -54,7 +54,7 @@ router.post('/register',[
     };
 
     //Token
-    jwt.sign(payload,'mysecret',{expiresIn:3600},(err,token)=>{
+    jwt.sign(payload,'mySecret',{expiresIn:3600},(err,token)=>{
         if(err)
         {
             throw err;
