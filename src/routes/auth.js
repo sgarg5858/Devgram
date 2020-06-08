@@ -5,6 +5,8 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const auth= require('../middleware/auth');
+
+
 //First API Login API
 router.post('/login',[
     check('email','Please Enter Valid Email').isEmail(),
