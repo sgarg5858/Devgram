@@ -23,3 +23,7 @@ Process:
 7. Login API
 
 8. Now we have to implement Authentication Middleware for Protected Routes where Jwt token will be verified....If validated then only goes to next requests otherwise returns response that Invalid Token or Something....
+
+9. npm install styled-components react-spring axios react-router-dom redux react-redux redux-thunk redux-devtools-extension moment react-moment --save
+
+10 Navbar ,Login and Register Component  and set-up redux store reducer and actions to get started...
