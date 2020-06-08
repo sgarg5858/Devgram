@@ -5,7 +5,6 @@ const bodyParser= require('body-parser');
 //Defining Express App
 const app=express();
 
-
 //Body Parser for accepting data via req
 app.use(bodyParser.urlencoded({
     extended: false
