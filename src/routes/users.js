@@ -12,7 +12,7 @@ router.post('/register',[
     check('email','Please Enter Valid Email').isEmail(),
     check('password','Password must be of atleast 6 characters').isLength({min:6})
 ], async (req,res,next)=>{
-
+    console.log('request reciec for Register')
     const errors=validationResult(req);
 
     //Check if any error
@@ -26,41 +26,41 @@ router.post('/register',[
     try {
    
         //Check if email is already Registered
-    let user =await User.findOne({"email":email});
+        let user =await User.findOne({"email":email});
 
-    if(user!==null)
-    {
-        return res.status(400).json({errors:[{msg: 'Email is Already Registered' }]});
-    }
-
-    const avatar = gravatar.url(email,{
-        s:'200',
-        r:'pg',
-        d:'mm'
-    });
-    //New Construct new User
-     user = new User({email,name,avatar,password}); 
-
-    //Now we will store hashed password in Database
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password,salt);
-
-    await user.save();
-
-    const payload={
-        user:{
-            id:user.id
-        }
-    };
-
-    //Token
-    jwt.sign(payload,'mySecret',{expiresIn:3600},(err,token)=>{
-        if(err)
+        if(user!==null)
         {
-            throw err;
+            return res.status(400).json({errors:[{msg: 'Email is Already Registered' }]});
         }
-        return res.status(200).json({token});
-    })
+
+        const avatar = gravatar.url(email,{
+            s:'200',
+            r:'pg',
+            d:'mm'
+        });
+        // Construct new User
+        user = new User({email,name,avatar,password}); 
+
+        //Now we will store hashed password in Database
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password,salt);
+
+        await user.save();
+
+        const payload={
+            user:{
+                id:user.id
+            }
+        };
+
+        // Generate Token
+        jwt.sign(payload,'mySecret',{expiresIn:360000},(err,token)=>{
+            if(err)
+            {
+                throw err;
+            }
+            return res.status(200).json({token});
+        })
 
     
     } catch (error) {

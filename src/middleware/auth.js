@@ -18,6 +18,6 @@ module.exports =  function(req,res,next) {
       next();
       
     } catch (error) {
-        req.status(401).json({errors:[{msg:"Invalid Token"}]})   
+        res.status(401).json({errors:[{msg:"Invalid Token"}]})   
     }
 }
