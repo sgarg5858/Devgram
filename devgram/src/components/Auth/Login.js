@@ -37,7 +37,7 @@ const Login = ({login,auth:{isAuthenticated}}) => {
     return (
         <Container fluid>
             <Row>
-                <Col lg={{span:6,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={12}>
+                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={12}>
                 
                 <Card style={{ width: '100%',marginTop:'15vh',textAlign:'center' }}>
                     <Card.Body>

@@ -66,7 +66,7 @@ router.get('/me',auth, async (req,res,next)=>{
 
     try {
         console.log(req.user.id);
-        const user= await User.findById(req.user.id);
+        const user= await User.findById(req.user.id).select('-password');
         return res.json(user);
     } catch (error) {
         console.log(error);
