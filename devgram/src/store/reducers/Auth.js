@@ -1,13 +1,14 @@
 import {
     REGISTER_SUCCESS,REGISTER_FAIL, LOGIN_FAIL,
-    LOGIN_SUCCESS, USER_SUCCESS, USER_FAIL
+    LOGIN_SUCCESS, USER_SUCCESS, USER_FAIL, LOGOUT, ALREADY_REGISTERED,NOT_REGISTERED
 } from '../actions/types';
 
 const initialState={
     token:localStorage.getItem('token'),
     isAuthenticated:null,
     isLoading:true,
-    user:null
+    user:null,
+    alreadyRegistered:false
 }
 
 export default function(state=initialState,action)
@@ -30,6 +31,17 @@ export default function(state=initialState,action)
                 isLoading:false,
                 isAuthenticated:true
             }
+        case ALREADY_REGISTERED:
+            return{
+                ...state,
+                alreadyRegistered:true
+            }
+        case NOT_REGISTERED:
+            return{
+                ...state,
+                alreadyRegistered:false
+            }
+        case LOGOUT:
         case REGISTER_FAIL:
         case LOGIN_FAIL:
         case USER_FAIL:
@@ -38,7 +50,8 @@ export default function(state=initialState,action)
                 ...state,
                 isLoading:false,
                 isAuthenticated:false,
-                user:null
+                user:null,
+                token:null
             };
         default:
             return state;

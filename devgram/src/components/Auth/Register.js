@@ -6,11 +6,11 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import {Link} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {register} from '../../store/actions/Auth';
+import {register,checkEmail} from '../../store/actions/Auth';
 
-const Register = ({register}) => {
+const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}) => {
 
     const[formData,setFormData]=useState({
         name:'',
@@ -21,11 +21,21 @@ const Register = ({register}) => {
     const{name,email,password,confirmpassword}=formData;
 
     const onChange = (event) =>{
+        if(event.target.name==='email')
+        {
+            setTyping(true);
+        }
         setFormData({
             ...formData,
             [event.target.name]:event.target.value
         })
     };
+    const[typing,setTyping]=useState(false);
+
+   const call = ()=>{
+    checkEmail({email});
+    setTyping(false);
+   }
     const onSubmit = (event) =>{
         event.preventDefault();
         if(password !== confirmpassword)
@@ -36,29 +46,34 @@ const Register = ({register}) => {
             register({name,email,password});
         }
     }
+    if(isAuthenticated)
+    {
+        return <Redirect to="/myprofile" />
+    }
 
     return (
         <Container>
             <Row>
-                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={{span:12,offset:0}}>
+                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={{span:10,offset:1}}>
                 
                 <Card style={{ width: '100%',marginTop:'12vh',textAlign:'center' }}>
                     <Card.Body>
                         <Card.Title style={{fontFamily:'Comic Sans MS', fontSize:'30px'}}>Devgram</Card.Title>
                         <Card.Text style={{marginTop:'2vh',marginBottom:'2vh'}}>
-                            <div style={{ color:'grey' }}>Sign up to explore Dev community</div>
+                            <div style={{ color:'grey',marginBottom:'2vh' }}>Sign up to explore Dev community</div>
                             <Form >
                                 <Form.Group controlId="formBasicName">
-                                    <Form.Control name="name"  value={name} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="text" placeholder="Name" />
+                                    <Form.Control required name="name"  value={name} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="text" placeholder="Name" />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
-                                    <Form.Control name="email"  value={email} onChange={(event)=>onChange(event)}style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
+                                    <Form.Control required name="email"  value={email} onChange={(event)=>{return onChange(event)}} onBlur={call}   style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
+                                    {alreadyRegistered && !typing ? <div style={{color:'red',textAlign:'left'}}>This email is Already Registered</div>:null}
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Control name="password"  value={password} onChange={(event)=>onChange(event)}style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
+                                    <Form.Control required name="password"  value={password} onChange={(event)=>onChange(event)}  style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicConfirmPassword">
-                                    <Form.Control name="confirmpassword"  value={confirmpassword} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Confirm Password" />
+                                    <Form.Control required name="confirmpassword"  value={confirmpassword} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Confirm Password" />
                                 </Form.Group>
 
                                 <Button variant="primary"  type="button" block onClick={(event) => onSubmit(event)}>
@@ -85,8 +100,13 @@ const Register = ({register}) => {
 }
 
 Register.propTypes = {
-    register:PropTypes.func.isRequired
+    register:PropTypes.func.isRequired,
+    auth:PropTypes.object.isRequired
 }
 
-export default connect(null,{register})(Register);
+const mapStateToProps= state =>({
+    auth:state.auth
+})
+
+export default connect(mapStateToProps,{register,checkEmail})(Register);
  

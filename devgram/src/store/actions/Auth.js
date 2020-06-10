@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-    REGISTER_SUCCESS,REGISTER_FAIL,LOGIN_FAIL,LOGIN_SUCCESS, USER_SUCCESS, USER_FAIL
+    REGISTER_SUCCESS,REGISTER_FAIL,LOGIN_FAIL,LOGIN_SUCCESS, 
+    USER_SUCCESS, USER_FAIL, LOGOUT,ALREADY_REGISTERED,NOT_REGISTERED
 } from './types';
 import {config} from '../../config';
 import setAuthToken from '../../utils/setAuthToken';
@@ -59,5 +60,31 @@ export const loadUser = () => async dispatch =>{
         dispatch({
             type: USER_FAIL
         })   
+    }
+}
+
+//LOGOUT
+
+export const logout = (history) => async dispatch =>{
+    dispatch({
+        type:LOGOUT
+    })
+    history.push('/login');
+}
+
+//Check email
+
+export const checkEmail = ({email}) => async dispatch =>{
+
+    const body= JSON.stringify({email});
+    try {
+      const res= await axios.post('http://localhost:4000/api/users/checkemail',body,config);
+      dispatch({
+        type:NOT_REGISTERED
+    })
+    } catch (error) {
+        dispatch({
+            type:ALREADY_REGISTERED
+        })
     }
 }

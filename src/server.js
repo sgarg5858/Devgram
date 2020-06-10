@@ -9,6 +9,9 @@ const app=express();
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+var cors = require('cors');
+
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use((request,response,next)=>

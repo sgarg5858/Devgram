@@ -70,4 +70,19 @@ router.post('/register',[
 
 });
 
+router.post('/checkemail',async(req,res,next)=>{
+    const{email}=req.body;
+    try {
+        let user = await User.findOne({'email':email});
+        if(user!==null)
+        {
+            return res.status(400).json({errors:[{msg: 'Email is Already Registered' }]});
+        }
+        res.status(200).json({msg:'Unique Email'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports=router;

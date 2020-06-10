@@ -18,10 +18,18 @@ const Login = ({login,auth:{isAuthenticated}}) => {
     });
     const{email,password}=formData;
 
+    const[submitted,setSubmitted]=useState(false);
+
    const onSubmit= (event) =>{
         event.preventDefault();
         console.log({email,password});
+        
         login({email,password});
+        setTimeout(()=>{
+            setSubmitted({
+                submitted:true
+            });
+        },700)
     }
   const  onChange= (event) =>{
         setFormData({
@@ -37,24 +45,27 @@ const Login = ({login,auth:{isAuthenticated}}) => {
     return (
         <Container fluid>
             <Row>
-                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={12}>
+                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={{span:10,offset:1}}>
                 
-                <Card style={{ width: '100%',marginTop:'15vh',textAlign:'center' }}>
+                <Card style={{ width: '100%',marginTop:'20vh',textAlign:'center' }}>
                     <Card.Body>
                         <Card.Title style={{fontFamily:'Comic Sans MS', fontSize:'30px'}}>Devgram</Card.Title>
                         <Card.Text style={{marginTop:'2vh',marginBottom:'2vh'}}>
+                        <div style={{ color:'grey',marginBottom:'2vh' }}>Built for developers</div>
                             <Form >
                                 <Form.Group controlId="formBasicEmail">
-                                    <Form.Control name="email" value={email} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
+                                    <Form.Control required name="email" value={email} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
+                                   
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Control name="password" value={password} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
+                                    <Form.Control required name="password" value={password} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
                                 </Form.Group>
 
                                 <Button onClick={(event)=>onSubmit(event)} variant="primary"  type="button" block>
                                     Login
                                 </Button>
+                                {submitted && !isAuthenticated ?<div style={{color:'red',marginTop:'2vh',fontSize:"25px"}}>Invalid Credentials</div>:null }
                             </Form>
                         </Card.Text >
                         
