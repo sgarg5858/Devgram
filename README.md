@@ -28,4 +28,5 @@ Process:
 
 10 Navbar ,Login and Register Component  and set-up redux store reducer and actions to get started...
 
-11 npm install @material-ui/core  npm install @material-ui/icons
+11 npm install react-bootstrap bootsrap -save
+
