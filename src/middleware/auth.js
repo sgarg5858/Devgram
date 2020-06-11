@@ -13,7 +13,7 @@ module.exports =  function(req,res,next) {
         //signature is important it is build using payload,header and secret key and then hashed only one way
         //this works by again generating signature from header and payload if both signature matches then
         //it is authenticated header.payload.signature
-      const decoded=  jwt.verify(token,'mySecret');
+      const decoded=jwt.verify(token,'mySecret');
       req.user=decoded.user;
       next();
       
