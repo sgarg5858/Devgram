@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card'
 import {Link,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {login} from '../../store/actions/Auth'
+import Alert from 'react-bootstrap/Alert'
 
 const Login = ({login,auth:{isAuthenticated}}) => {
 
@@ -16,6 +17,7 @@ const Login = ({login,auth:{isAuthenticated}}) => {
         email:'',
         password:''
     });
+
     const{email,password}=formData;
 
     const[submitted,setSubmitted]=useState(false);
@@ -31,12 +33,14 @@ const Login = ({login,auth:{isAuthenticated}}) => {
             });
         },700)
     }
+
   const  onChange= (event) =>{
         setFormData({
             ...formData,
             [event.target.name]:event.target.value
         })
     };
+
     if(isAuthenticated)
     {
        return <Redirect to="/myprofile" />
@@ -46,8 +50,9 @@ const Login = ({login,auth:{isAuthenticated}}) => {
         <Container fluid>
             <Row>
                 <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={{span:10,offset:1}}>
-                
-                <Card style={{ width: '100%',marginTop:'20vh',textAlign:'center' }}>
+                <div style={{marginTop:'20vh'}}>
+                { submitted && !isAuthenticated ? <Alert variant="danger" style={{textAlign:'center'}} onClose={()=>setSubmitted(false)} dismissible >Incorrect Username or Password</Alert> :null}
+                <Card style={{ width: '100%',textAlign:'center' }}>
                     <Card.Body>
                         <Card.Title style={{fontFamily:'Comic Sans MS', fontSize:'30px'}}>Devgram</Card.Title>
                         <Card.Text style={{marginTop:'2vh',marginBottom:'2vh'}}>
@@ -65,7 +70,7 @@ const Login = ({login,auth:{isAuthenticated}}) => {
                                 <Button onClick={(event)=>onSubmit(event)} variant="primary"  type="button" block>
                                     Login
                                 </Button>
-                                {submitted && !isAuthenticated ?<div style={{color:'red',marginTop:'2vh',fontSize:"25px"}}>Invalid Credentials</div>:null }
+                                
                             </Form>
                         </Card.Text >
                         
@@ -79,6 +84,8 @@ const Login = ({login,auth:{isAuthenticated}}) => {
                         </Card.Text >
                     </Card.Body>
                 </Card>
+            </div>
+                
                 </Col>
             </Row>
         </Container>

@@ -30,7 +30,7 @@ router.post('/register',[
 
         if(user!==null)
         {
-            return res.status(400).json({errors:[{msg: 'Email is Already Registered' }]});
+            return res.status(400).json({error:'Email is Already Registered' });
         }
 
         const avatar = gravatar.url(email,{
@@ -76,7 +76,7 @@ router.post('/checkemail',async(req,res,next)=>{
         let user = await User.findOne({'email':email});
         if(user!==null)
         {
-            return res.status(400).json({errors:[{msg: 'Email is Already Registered' }]});
+            return res.status(400).json({error: 'Email is Already Registered'});
         }
         res.status(200).json({msg:'Unique Email'});
     } catch (error) {

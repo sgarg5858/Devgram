@@ -29,7 +29,7 @@ router.post('/login',[
         
         if(user===null)
         {
-            return res.status(400).json({errors:[{msg:"User Not Registered!"}]})
+            return res.status(400).json({error:"This Email is Registered!"})
         }
         
         //Check if entered password matches with original Password
@@ -37,7 +37,7 @@ router.post('/login',[
 
         if(!isMatch)
         {
-            return res.status(400).json({errors:[{msg:"Invalid Credentials!"}]});
+            return res.status(400).json({error:"Invalid Credentials!"});
         }
         
         const payload={

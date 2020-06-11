@@ -67,7 +67,7 @@ const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Control required name="email"  value={email} onChange={(event)=>{return onChange(event)}} onBlur={call}   style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
-                                    {alreadyRegistered && !typing ? <div style={{color:'red',textAlign:'left'}}>This email is Already Registered</div>:null}
+                                    {alreadyRegistered && !typing ? <div style={{color:'red',textAlign:'left'}}>This email is already registered</div>:null}
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Control required name="password"  value={password} onChange={(event)=>onChange(event)}  style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />

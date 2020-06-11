@@ -32,6 +32,7 @@ export const login=({email,password}) => async dispatch =>{
     const body= JSON.stringify({email,password});
     try{
         const res = await axios.post('http://localhost:4000/api/auth/login',body,config);
+        console.log(res.data);
         dispatch({
             type:LOGIN_SUCCESS,
             payload:res.data
@@ -39,6 +40,7 @@ export const login=({email,password}) => async dispatch =>{
         dispatch(loadUser());
     }catch(error)
     {
+        console.log(error.response.data.error);
         dispatch({
             type: LOGIN_FAIL
         })   
