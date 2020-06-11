@@ -51,7 +51,8 @@ export default function(state=initialState,action)
                 isLoading:false,
                 isAuthenticated:false,
                 user:null,
-                token:null
+                token:null,
+                alreadyRegistered:false
             };
         default:
             return state;

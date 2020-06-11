@@ -70,6 +70,7 @@ router.post('/register',[
 
 });
 
+//when user registers we can improve UI by giving a response to user if this email is already there.
 router.post('/checkemail',async(req,res,next)=>{
     const{email}=req.body;
     try {
