@@ -31,9 +31,11 @@ app.get('/api',(req,res,next)=>{
 })
 app.use('/api/users',require('./routes/users'))
 app.use('/api/auth',require('./routes/auth'))
+app.use('/api/profile',require('./routes/profile'));
 
 const PORT=process.env.PORT || 4000
 
 app.listen(PORT,()=>{
     console.log(`Server Started on port ${PORT}`)
 })
+
