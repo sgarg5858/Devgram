@@ -48,7 +48,7 @@ const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}
     }
     if(isAuthenticated)
     {
-        return <Redirect to="/myprofile" />
+        return <Redirect to="/dashboard" />
     }
 
     return (

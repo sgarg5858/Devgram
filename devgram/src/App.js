@@ -9,6 +9,7 @@ import store from './store/store';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './store/actions/Auth';
 import DevNavbar from './components/Layout/DevNavbar';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 if(localStorage.token)
 {
@@ -29,7 +30,7 @@ function App() {
         <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
-          <Route path="/myprofile" exact component={Dashboard} />
+          <PrivateRoute path="/dashboard" exact component={Dashboard} />
           <Redirect from ="/" to ="/login" />
         </Switch>
       </BrowserRouter>
