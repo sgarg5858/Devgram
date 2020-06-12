@@ -83,7 +83,7 @@ router.post('/create',[auth,[
 
 router.get('/currentUser',auth, async(req,res,next)=>{
     try {
-        const profile = await Profile.findOne({user:req.user.id});
+        const profile = await Profile.findOne({user:req.user.id}).populate('user',['name','avatar']);
         if(!profile)
         {
             return res.status(400).json({msg:'No Profile Found for Logged In User'});

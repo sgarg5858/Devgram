@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     REGISTER_SUCCESS,REGISTER_FAIL,LOGIN_FAIL,LOGIN_SUCCESS, 
-    USER_SUCCESS, USER_FAIL, LOGOUT,ALREADY_REGISTERED,NOT_REGISTERED
+    USER_SUCCESS, USER_FAIL, LOGOUT,ALREADY_REGISTERED,NOT_REGISTERED, CLEAR_PROFILE
 } from './types';
 import {config} from '../../config';
 import setAuthToken from '../../utils/setAuthToken';
@@ -70,6 +70,9 @@ export const loadUser = () => async dispatch =>{
 export const logout = (history) => async dispatch =>{
     dispatch({
         type:LOGOUT
+    })
+    dispatch({
+        type:CLEAR_PROFILE
     })
     history.push('/login');
 }

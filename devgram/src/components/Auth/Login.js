@@ -22,12 +22,14 @@ const Login = ({login,auth:{isAuthenticated}}) => {
 
     const[submitted,setSubmitted]=useState(false);
 
+    var t;
+
    const onSubmit= (event) =>{
         event.preventDefault();
         console.log({email,password});
         
         login({email,password});
-        setTimeout(()=>{
+        t=setTimeout(()=>{
             setSubmitted({
                 submitted:true
             });
@@ -43,6 +45,7 @@ const Login = ({login,auth:{isAuthenticated}}) => {
 
     if(isAuthenticated)
     {
+        clearTimeout(t);
        return <Redirect to="/dashboard" />
     }
 
