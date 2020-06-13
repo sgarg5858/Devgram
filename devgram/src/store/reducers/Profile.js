@@ -1,11 +1,12 @@
-import {GET_PROFILE,GET_PROFILE_ERROR,GET_PROFILES,CLEAR_PROFILE,UPDATE_PROFILE, GET_REPOS} from '../actions/types';
+import {GET_PROFILE,GET_PROFILE_ERROR,GET_PROFILES,CLEAR_PROFILE,UPDATE_PROFILE, GET_REPOS, FILTER_PROFILES} from '../actions/types';
 
 const initialState={
     profile:null,
     profiles:[],
     isLoading:true,
     repos:[],
-    error:{}
+    error:{},
+    filteredProfiles:[]
 }
 
 export default function(state=initialState,action)
@@ -24,8 +25,17 @@ export default function(state=initialState,action)
             return{
                 ...state,
                 profiles:payload,
-                isLoading:false
+                isLoading:false,
+                filteredProfiles:payload
             };
+        case FILTER_PROFILES:
+            const filteredDevelopers=state.profiles.filter((profile)=>{
+                return (profile.user.name.toLowerCase()).includes(payload.toLowerCase()) ;
+            });
+            return{
+                ...state,
+                filteredProfiles:filteredDevelopers
+            }
         case GET_REPOS:
             return{
                 ...state,

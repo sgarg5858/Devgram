@@ -1,4 +1,4 @@
-import {GET_PROFILE,GET_PROFILES,GET_PROFILE_ERROR,UPDATE_PROFILE, DELETE_ACCOUNT,CLEAR_PROFILE, GET_REPOS}  from './types';
+import {GET_PROFILE,GET_PROFILES,GET_PROFILE_ERROR,UPDATE_PROFILE, DELETE_ACCOUNT,CLEAR_PROFILE, GET_REPOS, FILTER_PROFILES}  from './types';
 import axios from 'axios';
 import { config } from '../../config';
 import {setAlert} from './Alert';
@@ -183,3 +183,10 @@ export const deleteAccount  = (expId) => async dispatch =>{
         })
     }
 }
+export const filterDevelopers=(name) => async dispatch =>{
+
+    dispatch({
+        type:FILTER_PROFILES,
+        payload:name
+    })
+} 

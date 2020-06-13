@@ -16,6 +16,8 @@ import Alerts from './components/Layout/Alerts';
 import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
+import Profiles from './components/Profiles/Profiles';
+import Profile from './components/Profile/Profile';
 if(localStorage.token)
 {
   setAuthToken(localStorage.token);
@@ -41,6 +43,8 @@ function App() {
           <PrivateRoute path="/edit-profile" exact component={EditProfile} />
           <PrivateRoute path="/add-experience" exact component={AddExperience} />
           <PrivateRoute path="/add-education" exact component={AddEducation} />
+          <PrivateRoute path="/community" exact component={Profiles} />
+          <PrivateRoute path="/profile/:id" exact component={Profile} />
           <Redirect from ="/" to ="/login" />
         </Switch>
       </BrowserRouter>
