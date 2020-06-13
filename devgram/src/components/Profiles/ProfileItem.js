@@ -11,13 +11,13 @@ const ProfileItem = ({profile:{user:{_id,name,avatar},status,location,bio,compan
             <Card bg="dark" text="white" style={{ width: '100%',marginTop:'4vh' }}>
                 {/* <Card.Img  variant="top" src={avatar} /> */}
                 <Card.Body>
-                    <Card.Title>{name}</Card.Title>
+                    <Card.Title >{name}</Card.Title>
                     <Card.Text>
-                        {status} { company ? `at ${company}`:null},
+                        {status} { company ? `at ${company}`:null}
                         <br />
                         {location}
                     </Card.Text>
-                    <Button variant="outline-light" onClick={()=>{return history.push(`profile/${_id}`)}} >Show Profile</Button>
+                    <Button variant="outline-primary" onClick={()=>{return history.push(`profile/${_id}`)}} >Show Profile</Button>
                 </Card.Body>
             </Card>
         </Col>

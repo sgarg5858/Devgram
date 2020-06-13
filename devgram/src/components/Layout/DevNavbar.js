@@ -20,7 +20,7 @@ const DevNavbar = ({isAuthenticated,logout,history}) => {
                   <Nav.Link><Link style={{ color: 'white' }} to="/community">Community</Link></Nav.Link>
                 </Nav>
                 <Nav>
-                  <Nav.Link onClick={()=>{logout(history)}} >Logout</Nav.Link>
+                  <Nav.Link style={{color:'white'}} onClick={()=>{logout(history)}} >Logout</Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>:null
