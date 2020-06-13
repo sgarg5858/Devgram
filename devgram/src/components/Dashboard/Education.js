@@ -5,8 +5,9 @@ import Moment from 'react-moment'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import {deleteEducation} from '../../store/actions/Profile';
 
-const Education = ({education}) => {
+const Education = ({education,deleteEducation}) => {
 
     const educations =  education.map((exp) => {
         return <tr key={exp.id} >
@@ -15,7 +16,9 @@ const Education = ({education}) => {
             <td><Moment format="YYYY/MM//DD">{exp.from}</Moment>-{exp.to ===null ? 'Present':
             <Moment format="YYYY/MM//DD">{exp.to}</Moment>} </td>
             <td>
-                <Button variant="outline-danger" type="button">Delete</Button>
+                <Button variant="outline-danger" type="button"
+                onClick={()=> deleteEducation(exp._id)}
+                >Delete</Button>
             </td>
         </tr>
     })
@@ -23,7 +26,7 @@ const Education = ({education}) => {
     return (
        
             <Card bg="dark" text="white">
-            <Card.Title style={{marginLeft:'2vw',marginTop:'2vh'}} as="h5">Experience</Card.Title>
+            <Card.Title style={{marginLeft:'2vw',marginTop:'2vh'}} as="h5">Education</Card.Title>
             <Card.Body style={{textAlign:"center"}}>
              <Table striped bordered hover variant="dark" responsive>
                  <thead>
@@ -45,7 +48,8 @@ const Education = ({education}) => {
 }
 
 Education.propTypes = {
-education:PropTypes.array.isRequired
+education:PropTypes.array.isRequired,
+deleteEducation:PropTypes.func.isRequired
 }
 
-export default Education
+export default connect(null,{deleteEducation})(Education)

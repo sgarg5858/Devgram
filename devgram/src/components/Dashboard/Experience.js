@@ -5,17 +5,20 @@ import Moment from 'react-moment'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import {deleteExperience} from '../../store/actions/Profile'
 
-const Experience = ({experience}) => {
+const Experience = ({experience,deleteExperience}) => {
 
     const experiences =  experience.map((exp) => {
-        return <tr key={exp.id} >
+        return <tr key={exp._id} >
             <td>{exp.company}</td>
             <td>{exp.title}</td>
             <td><Moment format="YYYY/MM//DD">{exp.from}</Moment>-{exp.to ===null ? 'Present':
             <Moment format="YYYY/MM//DD">{exp.to}</Moment>} </td>
             <td>
-                <Button variant="outline-danger" type="button">Delete</Button>
+                <Button variant="outline-danger" type="button"
+                onClick={()=> deleteExperience(exp._id) }
+                >Delete</Button>
             </td>
         </tr>
     })
@@ -45,7 +48,8 @@ const Experience = ({experience}) => {
 }
 
 Experience.propTypes = {
-  experience:PropTypes.array.isRequired
+  experience:PropTypes.array.isRequired,
+  deleteExperience:PropTypes.func.isRequired
 }
 
-export default Experience
+export default connect(null,{deleteExperience})(Experience)

@@ -1,10 +1,10 @@
-import {GET_PROFILE,GET_PROFILE_ERROR,GET_PROFILES,CLEAR_PROFILE,UPDATE_PROFILE} from '../actions/types';
+import {GET_PROFILE,GET_PROFILE_ERROR,GET_PROFILES,CLEAR_PROFILE,UPDATE_PROFILE, GET_REPOS} from '../actions/types';
 
 const initialState={
     profile:null,
     profiles:[],
     isLoading:true,
-    gitrepos:[],
+    repos:[],
     error:{}
 }
 
@@ -24,6 +24,12 @@ export default function(state=initialState,action)
             return{
                 ...state,
                 profiles:payload,
+                isLoading:false
+            };
+        case GET_REPOS:
+            return{
+                ...state,
+                repos:payload,
                 isLoading:false
             };
         case CLEAR_PROFILE:

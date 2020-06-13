@@ -1,6 +1,7 @@
 import {
     REGISTER_SUCCESS,REGISTER_FAIL, LOGIN_FAIL,
-    LOGIN_SUCCESS, USER_SUCCESS, USER_FAIL, LOGOUT, ALREADY_REGISTERED,NOT_REGISTERED
+    LOGIN_SUCCESS, USER_SUCCESS, USER_FAIL, LOGOUT, ALREADY_REGISTERED,NOT_REGISTERED,
+    DELETE_ACCOUNT
 } from '../actions/types';
 
 const initialState={
@@ -41,6 +42,7 @@ export default function(state=initialState,action)
                 ...state,
                 alreadyRegistered:false
             }
+        case DELETE_ACCOUNT:
         case LOGOUT:
         case REGISTER_FAIL:
         case LOGIN_FAIL:

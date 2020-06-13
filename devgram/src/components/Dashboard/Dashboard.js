@@ -12,8 +12,9 @@ import { Button } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Experience from  './Experience';
 import Education from  './Education';
+import {deleteAccount} from '../../store/actions/Profile';
 
-const Dashboard = ({getCurrentProfile,profile:{profile,isLoading},auth:{user},history}) => {
+const Dashboard = ({getCurrentProfile,profile:{profile,isLoading},auth:{user},history,deleteAccount}) => {
 
     useEffect(()=>{
         getCurrentProfile();
@@ -28,9 +29,9 @@ const Dashboard = ({getCurrentProfile,profile:{profile,isLoading},auth:{user},hi
                         <Card.Title style={{marginLeft:'2vw',marginTop:'2vh'}} as="h5">Hi {user && user.name ? user.name: 'Stranger'} ,</Card.Title>
                         <Card.Body style={{textAlign:"center"}}>
                             <ButtonGroup>
-                            <Button variant="outline-info"  onClick={()=>{return history.push('/edit-profile') }}>Edit Profile</Button>
-                            <Button variant="outline-info"  onClick={()=>{return history.push('/add-education') }}>Add Education</Button>
-                            <Button  variant="outline-info" onClick={()=>{return history.push('/add-experience') }}>Add Experience</Button>
+                            <Button rounded variant="outline-info"  onClick={()=>{return history.push('/edit-profile') }}>Edit Profile</Button>
+                            <Button rounded variant="outline-info" style={{marginLeft:'1vw'}}  onClick={()=>{return history.push('/add-education') }}>Add Education</Button>
+                            <Button  rounded variant="outline-info" style={{marginLeft:'1vw'}} onClick={()=>{return history.push('/add-experience') }}>Add Experience</Button>
                             </ButtonGroup>
                         </Card.Body>
                         </Card>
@@ -79,4 +80,4 @@ const mapStateToProps= state =>({
     auth:state.auth
 })
 
-export default connect(mapStateToProps,{getCurrentProfile})(withRouter(Dashboard));
+export default connect(mapStateToProps,{getCurrentProfile,deleteAccount})(withRouter(Dashboard));
