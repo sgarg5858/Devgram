@@ -92,4 +92,42 @@ router.delete('/getPostById/:postid',auth,async (req,res,next)=>{
 })
 
 //Adding Like to a post
+router.put('/like/:postid',auth,async(req,res,next)=>{
+    console.log('Like Request');
+    try {
+        const user= await User.findById(req.user.id);
+        const post = await Post.findById(req.params.postid);
+        if(post.likes.filter((like)=>{return like.user.toString()===req.user.id}).length > 0)
+        {
+            return res.status(400).json({msg:'Post Already Liked'});
+        }
+        post.likes.unshift({user:req.user.id,name:user.name});
+        await post.save();
+        return  res.json(post.likes);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json('Server Error');
+    }
+})
+//Removing Like to a post
+router.put('/unlike/:postid',auth,async(req,res,next)=>{
+    console.log('Dislike Request');
+    try {
+        const user= await User.findById(req.user.id);
+        const post = await Post.findById(req.params.postid);
+       
+        let removeLikeIndex=-1;
+        removeLikeIndex= post.likes.map((like)=>like.user.toString()).indexOf(req.user.id);
+        if(removeLikeIndex ==-1)
+        {
+            return res.status(400).json({msg:'Post Not Liked'});
+        }
+        post.likes.splice(removeLikeIndex,1);
+        await post.save();
+        return  res.json(post.likes);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json('Server Error');
+    }
+})
 module.exports=router
