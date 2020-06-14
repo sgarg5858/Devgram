@@ -7,8 +7,9 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
+import SearchIcon from '@material-ui/icons/Search';
 import Alert from 'react-bootstrap/Alert'
+import InputGroup from 'react-bootstrap/InputGroup'
 import ProfileItem from './ProfileItem';
 
 const Profiles = ({profile:{filteredProfiles,isLoading},getAllProfiles,filterDevelopers}) => {
@@ -26,7 +27,6 @@ const Profiles = ({profile:{filteredProfiles,isLoading},getAllProfiles,filterDev
             <Col lg={{span:4,offset:4}} md={{span:4,offset:4}} sm={{span:6,offset:3}} xs={{span:8,offset:2}}>
             <Form.Group controlId="search" >
                 <Form.Control type="text" placeholder="Search by name, job title" style={{ backgroundColor:'black',color: `#007bff` }}  onChange={(event)=>filterDevelopers(event.target.value)}/>
-               
             </Form.Group>
             </Col>
             </Row>
