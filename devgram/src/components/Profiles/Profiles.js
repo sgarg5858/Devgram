@@ -25,7 +25,8 @@ const Profiles = ({profile:{filteredProfiles,isLoading},getAllProfiles,filterDev
             <Row style={{marginTop:'2vh'}}  >
             <Col lg={{span:4,offset:4}} md={{span:4,offset:4}} sm={{span:6,offset:3}} xs={{span:8,offset:2}}>
             <Form.Group controlId="search" >
-                <Form.Control type="text" placeholder="Search by name" style={{ backgroundColor:'whitesmoke' }}  onChange={(event)=>filterDevelopers(event.target.value)}/>
+                <Form.Control type="text" placeholder="Search by name, job title" style={{ backgroundColor:'black',color: `#007bff` }}  onChange={(event)=>filterDevelopers(event.target.value)}/>
+               
             </Form.Group>
             </Col>
             </Row>

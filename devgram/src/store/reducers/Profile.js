@@ -30,7 +30,10 @@ export default function(state=initialState,action)
             };
         case FILTER_PROFILES:
             const filteredDevelopers=state.profiles.filter((profile)=>{
-                return (profile.user.name.toLowerCase()).includes(payload.toLowerCase()) ;
+                return (
+                (profile.user.name.toLowerCase()).includes(payload.toLowerCase())||
+                (profile.status.toLowerCase()).includes(payload.toLowerCase()) 
+                ) ;
             });
             return{
                 ...state,
