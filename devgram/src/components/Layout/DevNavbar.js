@@ -16,8 +16,10 @@ const DevNavbar = ({isAuthenticated,logout,history}) => {
               <Navbar.Toggle  aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse  id="responsive-navbar-nav">
                 <Nav className="mr-auto">
+                  <Nav.Link><Link style={{ color: 'white' }} to="/feed">Feed</Link></Nav.Link>
                   <Nav.Link ><Link style={{ color: 'white' }} to="/dashbaord">Dashboard</Link></Nav.Link>
                   <Nav.Link><Link style={{ color: 'white' }} to="/community">Community</Link></Nav.Link>
+
                 </Nav>
                 <Nav>
                   <Nav.Link style={{color:'white'}} onClick={()=>{logout(history)}} >Logout</Nav.Link>

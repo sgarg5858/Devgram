@@ -17,3 +17,6 @@ export const REMOVE_ALERT='REMOVE_ALERT';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 export const GET_REPOS='GET_REPOS';
 export const FILTER_PROFILES='FILTER_PROFILES';
+export const GET_POSTS='GET_POSTS';
+export const POST_ERROR='POST_ERROR';
+export const UPDATE_LIKES='UPDATE_LIKES';

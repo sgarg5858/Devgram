@@ -43,11 +43,11 @@ router.post('/addPost', [auth,[
 //Get All Posts
 router.get('/getAllPosts',auth,async(req,res,next)=>{
     try {
-        const posts=await Post.find();
+        const posts=await Post.find().sort({date:-1});
         return res.status(200).json(posts);
     } catch (error) {
         console.log(error);
-        return res.status(500).json('Server Error').sort({date:-1});
+        return res.status(500).json('Server Error')
     }
 })
 //Get Post By Id:
