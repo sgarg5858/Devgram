@@ -1,4 +1,8 @@
-import {GET_POSTS,POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST} from './types';
+import {
+    GET_POSTS,POST_ERROR, UPDATE_LIKES, 
+    DELETE_POST, ADD_POST, GET_POST, 
+    ADD_COMMENT, REMOVE_COMMENT, UPDATE_COMMENT_LIKES
+    } from './types';
 import axios from 'axios';
 import {setAlert} from './Alert';
 import {loadUser} from './Auth';
@@ -99,5 +103,71 @@ export const addPost =(text) => async dispatch =>{
             type:POST_ERROR,
             payload:error
         });
+}
+}
+
+export const addComment =(postid,text) => async dispatch =>{
+    const body=JSON.stringify({text});
+    try {
+        const res = await axios.post(`http://localhost:4000/api/post/addComment/${postid}`,body,config); 
+        dispatch({
+            type:ADD_COMMENT,
+            payload:{comments:res.data,postid}
+        });
+        dispatch(setAlert('Comment Added','success'));
+    } catch (error) {
+         dispatch(setAlert('Request Failed','danger'));
+        dispatch({
+            type:POST_ERROR,
+            payload:error
+        });
+}
+}
+export const deleteComment =(postid,commentid) => async dispatch =>{
+    try {
+        const res = await axios.delete(`http://localhost:4000/api/post/deleteComment/${postid}/${commentid}`); 
+        dispatch({
+            type:REMOVE_COMMENT,
+            payload:{comments:res.data,postid}
+        });
+        dispatch(setAlert('Comment Deleted','success'));
+    } catch (error) {
+         dispatch(setAlert('Request Failed','danger'));
+        dispatch({
+            type:POST_ERROR,
+            payload:error
+        });
+}
+}
+export const likeComment=(postid,commentid) => async dispatch =>{
+    try {
+        const res = await axios.put(`http://localhost:4000/api/post/likeComment/${postid}/${commentid}`); 
+        dispatch({
+            type:UPDATE_COMMENT_LIKES,
+            payload:{post:res.data,postid,commentid}
+        });
+        dispatch(setAlert('Comment Liked','success'));
+    } catch (error) {
+        //  dispatch(setAlert('Request Failed','danger'));
+        // dispatch({
+        //     type:POST_ERROR,
+        //     payload:error
+        // });
+}
+}
+export const dislikeComment=(postid,commentid) => async dispatch =>{
+    try {
+        const res = await axios.put(`http://localhost:4000/api/post/dislikeComment/${postid}/${commentid}`); 
+        dispatch({
+            type:UPDATE_COMMENT_LIKES,
+            payload:{post:res.data,postid,commentid}
+        });
+        dispatch(setAlert('Comment unliked','success'));
+    } catch (error) {
+        //  dispatch(setAlert('Request Failed','danger'));
+        // dispatch({
+        //     type:POST_ERROR,
+        //     payload:error
+        // });
 }
 }

@@ -1,4 +1,8 @@
-import {GET_POSTS,POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST} from '../actions/types';
+import {
+    GET_POSTS,POST_ERROR, UPDATE_LIKES,
+     DELETE_POST, ADD_POST, GET_POST,
+     ADD_COMMENT,REMOVE_COMMENT,UPDATE_COMMENT_LIKES
+    } from '../actions/types';
 
 const initialState={
     posts:[],
@@ -26,6 +30,22 @@ export default function(state=initialState,action)
                 posts:payload,
                 isLoading:false,
                 filteredPosts:payload
+            } 
+        case REMOVE_COMMENT:
+        case ADD_COMMENT:
+            let updatedPosts1=null;
+            if(state.posts!==null)
+            {
+            const postIndex=state.posts.map((post)=>{return post._id}).indexOf(payload.postid);
+            let selectedPost=state.posts[postIndex];
+            selectedPost={...selectedPost,comments:payload.comments}
+            updatedPosts1=state.posts.map((post)=>{return post._id===payload.postid? selectedPost:post });
+            }
+            return{
+                ...state,
+                post:{...state.post,comments:payload.comments},
+                posts:updatedPosts1,
+                isLoading:false
             }
         case GET_POST:
             return {
@@ -50,6 +70,23 @@ export default function(state=initialState,action)
                 ...state,
                 posts:updatedPosts ,
                 post:updatedPost,
+                isLoading:false
+            }
+        case UPDATE_COMMENT_LIKES:
+            let updatedPost1=state.post;
+            let updatedPosts2=state.posts;
+            if(state.post!==null)
+            {
+                if(state.post._id===payload.postid)
+                {
+                   updatedPost1=payload.post
+                }
+            }
+                updatedPosts2=state.posts.map((post)=> post._id===payload.postid?payload.post:post)
+            return{
+                ...state,
+                post:updatedPost1,
+                posts:updatedPosts2,
                 isLoading:false
             }
         case DELETE_POST:

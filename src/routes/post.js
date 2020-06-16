@@ -149,7 +149,7 @@ router.post('/addComment/:postid',[auth,[
             name:user.name,
             avatar:user.avatar
         };
-        post.comments.unshift(newComment);
+        post.comments.push(newComment);
         await post.save();
         return res.json(post.comments);
     } catch (error) {
@@ -161,6 +161,7 @@ router.post('/addComment/:postid',[auth,[
 
 router.delete('/deleteComment/:postid/:commentid',auth, async(req,res,next)=>{
 
+    console.log(req.params.commentid);
     try {
         // const user =await User.findById(req.user.id);
         const post =await Post.findById(req.params.postid);
@@ -176,7 +177,7 @@ router.delete('/deleteComment/:postid/:commentid',auth, async(req,res,next)=>{
         {
             return res.status(400).json({msg:"User Not Authorized"});
         }
-        const removeIndex=post.comments.map(comment=>comment._id.toString()).indexOf(req.params.comment_id);
+        const removeIndex=post.comments.map(comment=>comment._id.toString()).indexOf(req.params.commentid);
         post.comments.splice(removeIndex,1);
         await post.save();
         return res.json(post.comments);
@@ -213,7 +214,7 @@ router.put('/likeComment/:postid/:commentid',auth, async(req,res,next)=>{
         });
         console.log(comment);
         post.save();
-        return res.json(comment.likes);
+        return res.json(post);
     } catch (error) {
         console.log(error);
         return res.status(500).json('Server Error');
@@ -243,7 +244,7 @@ router.put('/dislikeComment/:postid/:commentid',auth, async(req,res,next)=>{
         
         comment.likes.splice(removeIndex,1);
         post.save();
-        return res.json(comment.likes);
+        return res.json(post);
     } catch (error) {
         console.log(error);
         return res.status(500).json('Server Error');

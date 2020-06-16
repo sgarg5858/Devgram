@@ -17,7 +17,7 @@ const Posts = ({getPosts,post:{posts,isLoading},auth:{user}}) => {
     },[getPosts]);
 
     return (
-       isLoading && user!==null ?<Spinner/>:
+      posts.length===0 || isLoading && user!==null ?<Spinner/>:
            <Container fluid>
                 {/* PostForm Component */}
                 {/* <Row style={{marginTop:'2vh'}}  >

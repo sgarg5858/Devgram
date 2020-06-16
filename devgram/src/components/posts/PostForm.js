@@ -29,7 +29,9 @@ const PostForm = ({addPost}) => {
                             as="textarea"  
                             />
                         </Form.Group>
-                        <Button  style={{backgroundColor:'#EBA40E',border:'#F9BE7C'}} onClick={(event)=>{
+                        <Button  style={{backgroundColor:'#EBA40E',border:'#F9BE7C'}} 
+                            disabled={text===''}
+                            onClick={(event)=>{
                             event.preventDefault();
                             addPost(text);
                             setText('');

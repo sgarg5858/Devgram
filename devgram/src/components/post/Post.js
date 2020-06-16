@@ -7,6 +7,7 @@ import PostItem from '../posts/PostItem';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import CommentForm from './CommentForm';
 const Post = ({getPost,post:{post,isLoading},match,auth:{user}}) => {
 
     useEffect(()=>{
@@ -17,8 +18,10 @@ const Post = ({getPost,post:{post,isLoading},match,auth:{user}}) => {
         isLoading || user===null || post===null ? <Spinner/>:
         <Container fluid>
         <Row style={{marginTop:'2vh'}}>
-            <PostItem post={post}/>
+            <PostItem post={post} />
+
         </Row>
+
 </Container>
     )
 }
