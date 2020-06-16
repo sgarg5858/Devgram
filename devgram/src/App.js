@@ -19,6 +19,7 @@ import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/Profiles/Profiles';
 import Profile from './components/Profile/Profile';
 import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 if(localStorage.token)
 {
   setAuthToken(localStorage.token);
@@ -47,6 +48,7 @@ function App() {
           <PrivateRoute path="/community" exact component={Profiles} />
           <PrivateRoute path="/profile/:id" exact component={Profile} />
           <PrivateRoute path="/feed" exact component={Posts} />
+          <PrivateRoute path="/post/:postid" exact component={Post} />
           <Redirect from ="/" to ="/login" />
         </Switch>
       </BrowserRouter>

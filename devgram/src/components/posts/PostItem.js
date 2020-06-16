@@ -11,25 +11,27 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from 'react-router-dom';
-const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,history}) => {
+import {addLike,removeLike,deletePost} from '../../store/actions/post';
+
+const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,history,addLike,removeLike,deletePost}) => {
     const divStyle = {
         color: 'red',
     };
     return (
         <Col lg={{span:6,offset:3}} md={{span:8,offset:2}} sm={{span:8,offset:2}} xs={{span:10,offset:1}} >
             <Card bg="dark" text="white" style={{width:'100%',marginTop:'4vh'}}>
-                <Card.Header style={{color:'#F9BE7C'}}>{name}</Card.Header>
+                <Card.Header onClick={()=>history.push(`/profile/${auth.user._id}`)} style={{color:'#F9BE7C',cursor:'pointer'}}>{name}</Card.Header>
                 <Card.Body>
                     <Card.Title style={{color:'#DDEEFF'}}>{text}</Card.Title>
                     <Card.Text style={{color:'#DDEEFF'}}>Posted on {<Moment format='YYYY/MM/DD'>{date}</Moment>}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
                    <ButtonGroup>
-                   <Button variant="dark">
+                   <Button variant="dark" onClick={()=> addLike(_id)}>
                         <ThumbUpIcon style={{color:'#AFE5D0'}}/>
                         {likes.length>0?<span style={{marginLeft:'3px'}}>{likes.length}</span>:null}
                     </Button >
-                    <Button variant="dark" style={{marginLeft:'2vw'}}>
+                    <Button variant="dark" onClick={()=>removeLike(_id)} style={{marginLeft:'2vw'}}>
                         <ThumbDownIcon style={{color:'#C2C5ED'}}/>
                     </Button>
                     <Button variant="dark" onClick={()=>{history.push(`/post/${_id}`)}} style={{marginLeft:'2vw'}}>
@@ -37,7 +39,7 @@ const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,his
                      {comments.length >0 ?    <span style={{marginLeft:'3px'}}>{comments.length}</span>:null}
                     </Button>
                     { auth.user!==null && user === auth.user._id ? 
-                    <Button variant="dark" style={{marginLeft:'2vw'}}>
+                    <Button variant="dark" style={{marginLeft:'2vw'}} onClick={()=>deletePost(_id)}>
                     <DeleteIcon ba style={{color:'red'}} />
                     </Button>:null
                     }
@@ -50,9 +52,12 @@ const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,his
 
 PostItem.propTypes = {
 post:PropTypes.object.isRequired,
-auth:PropTypes.object.isRequired
+auth:PropTypes.object.isRequired,
+addLike:PropTypes.func.isRequired,
+removeLike:PropTypes.func.isRequired,
+deletePost:PropTypes.func.isRequired
 }
 const mapStateToProps= state =>({
     auth:state.auth
 })
-export default connect(mapStateToProps,{})(withRouter(PostItem));
+export default connect(mapStateToProps,{addLike,removeLike,deletePost})(withRouter(PostItem));

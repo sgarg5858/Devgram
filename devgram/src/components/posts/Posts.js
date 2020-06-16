@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getPosts} from '../../store/actions/post';
 import Spinner from '../Layout/Spinner';
 import PostItem from './PostItem';
+import PostForm from './PostForm';
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -27,6 +28,9 @@ const Posts = ({getPosts,post:{posts,isLoading},auth:{user}}) => {
                 </Col>
                 </Row> */}
             <Row style={{marginTop:'2vh'}}>
+                <PostForm/>
+            </Row>
+            <Row style={{marginTop:'1vh'}}>
                     {
                         posts.map((post)=>{
                         return <PostItem key={post._id} post={post} />

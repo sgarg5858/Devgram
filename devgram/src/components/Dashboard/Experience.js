@@ -34,7 +34,7 @@ const Experience = ({experience,deleteExperience}) => {
                         <th>Company</th>
                         <th>Title</th>
                         <th>Years</th>
-                        <th>Action</th>
+                        <th>Manage</th>
                      </tr>
                  </thead>
                  <tbody>
