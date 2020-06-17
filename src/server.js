@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/database');
 const bodyParser= require('body-parser');
-
+const path= require('path');
 //Defining Express App
 const app=express();
 
@@ -26,13 +26,19 @@ app.use((request,response,next)=>
 
 //Connection to MongoDB Atlas
 connectDB();
-app.get('/api',(req,res,next)=>{
-    res.send("You are in here")
-})
+
 app.use('/api/users',require('./routes/users'))
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/profile',require('./routes/profile'));
 app.use('/api/post', require('./routes/post'));
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('../devgram/build'));
+    app.get('*',(req,res,next)=>{
+        res.sendFile(path.resolve(__dirname,'..','devgram','build','index.html'))
+    })
+}
+
 const PORT=process.env.PORT || 4000
 
 app.listen(PORT,()=>{
