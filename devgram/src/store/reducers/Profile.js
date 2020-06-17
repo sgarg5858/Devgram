@@ -5,7 +5,7 @@ const initialState={
     profiles:[],
     isLoading:true,
     repos:[],
-    error:{},
+    error:null,
     filteredProfiles:[]
 }
 
@@ -19,14 +19,16 @@ export default function(state=initialState,action)
             return{
                 ...state,
                 profile:payload,
-                isLoading:false
+                isLoading:false,
+                error:{}
             };
         case GET_PROFILES:
             return{
                 ...state,
                 profiles:payload,
                 isLoading:false,
-                filteredProfiles:payload
+                filteredProfiles:payload,
+                error:{}
             };
         case FILTER_PROFILES:
             const filteredDevelopers=state.profiles.filter((profile)=>{
@@ -37,20 +39,23 @@ export default function(state=initialState,action)
             });
             return{
                 ...state,
-                filteredProfiles:filteredDevelopers
+                filteredProfiles:filteredDevelopers,
+                error:{}
             }
         case GET_REPOS:
             return{
                 ...state,
                 repos:payload,
-                isLoading:false
+                isLoading:false,
+                error:{}
             };
         case CLEAR_PROFILE:
             return{
                 ...state,
                 profile:null,
                 repos:[],
-                isLoading:false
+                isLoading:false,
+                error:{}
             }
         case GET_PROFILE_ERROR:
             return{

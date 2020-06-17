@@ -1,10 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 import PropTypes from 'prop-types'
 import {withRouter} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import { Button, ButtonGroup } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import Modal from 'react-bootstrap/Modal'
 import Moment from 'react-moment';
 import {connect} from 'react-redux'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -19,15 +19,41 @@ const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,his
     const divStyle = {
         color: 'red',
     };
+  const [show, setShow] = useState(false);
+
+  const handleClose1 = () => setShow(false);
+  const handleClose2 = () =>{
+    deletePost(_id);
+    setShow(false);
+   
+  }
+  const handleShow = () => setShow(true);
+  if(show)
+  {
+      return (<Modal show={show} onHide={handleClose1} centered size="md">
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this post?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose2}>
+            Yes
+          </Button>
+          <Button variant="primary" onClick={handleClose1}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>)
+  }
     return (
         <Col lg={{span:6,offset:3}} md={{span:8,offset:2}} sm={{span:8,offset:2}} xs={{span:10,offset:1}} >
             <Card bg="dark" text="white" style={{width:'100%',marginTop:'4vh'}}>
-                <Card.Header onClick={()=>history.push(`/profile/${user}`)} style={{color:'#F9BE7C',cursor:'pointer'}}>{name}</Card.Header>
-                <Card.Body>
-                    <Card.Title style={{color:'#DDEEFF'}}>{text}</Card.Title>
-                    <Card.Text style={{color:'#DDEEFF'}}>Posted on {<Moment format='YYYY/MM/DD'>{date}</Moment>}</Card.Text>
+                <Card.Header onClick={()=>history.push(`/profile/${user}`)} style={{color:'#F9BE7C',cursor:'pointer',padding:'0px',paddingLeft:'10px'}}>{name}</Card.Header>
+                <Card.Body style={{padding:'5px'}}>
+                    <Card.Title style={{color:'#DDEEFF',padding:'0px',paddingLeft:'3px',margin:'3px'}}>{text}</Card.Title>
+                    <Card.Text style={{color:'#DDEEFF',padding:'0px',paddingLeft:'6px'}}>Posted on {<Moment format='YYYY/MM/DD'>{date}</Moment>}</Card.Text>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer style={{padding:'4px'}}>
                    <ButtonGroup>
                    <Button variant="dark" onClick={()=> addLike(_id)}>
                         <ThumbUpIcon style={{color:'#AFE5D0'}}/>
@@ -41,7 +67,7 @@ const PostItem = ({post:{_id,name,text,avatar,user,likes,comments,date},auth,his
                      {comments.length >0 ?    <span style={{marginLeft:'3px'}}>{comments.length}</span>:null}
                     </Button>
                     { auth.user!==null && user === auth.user._id ? 
-                    <Button variant="dark" style={{marginLeft:'2vw'}} onClick={()=>deletePost(_id)}>
+                    <Button variant="dark" style={{marginLeft:'2vw'}} onClick={()=>setShow(true)}>
                     <DeleteIcon ba style={{color:'red'}} />
                     </Button>:null
                     }

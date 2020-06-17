@@ -14,7 +14,7 @@ const CommentForm = ({addComment,postid}) => {
     return (
        
             <Card bg="dark" text="white">
-                    <Card.Header>
+                    <Card.Header style={{padding:'4px'}}>
                         <Form>
                         <Row>
                             <Col lg={8} md={8} sm={8} xs={8}>

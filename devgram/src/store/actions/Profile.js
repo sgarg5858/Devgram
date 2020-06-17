@@ -31,7 +31,7 @@ export const getProfileById = (userId) => async dispatch =>{
         console.log(error);
         dispatch({
             type:GET_PROFILE_ERROR,
-            payload:error.response
+            payload:error.response.data.msg
         })
     }
 };

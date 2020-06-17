@@ -1,4 +1,4 @@
-import React,{useState, Fragment} from 'react'
+import React,{useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -6,11 +6,11 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import {Link,Redirect} from 'react-router-dom';
+import {Link,Redirect,withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {register,checkEmail} from '../../store/actions/Auth';
 
-const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}) => {
+const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered},history}) => {
 
     const[formData,setFormData]=useState({
         name:'',
@@ -18,19 +18,39 @@ const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}
         password:'',
         confirmpassword:''
     });
+    const[typing,setTyping]=useState(false);
+
+    const[passwordsMatch,setPasswordsMatch]=useState(true);
+
     const{name,email,password,confirmpassword}=formData;
 
-    const onChange = (event) =>{
-        if(event.target.name==='email')
-        {
-            setTyping(true);
-        }
+    const onChangeInput = (event) =>{
+        
         setFormData({
             ...formData,
             [event.target.name]:event.target.value
         })
+        
+        if(event.target.name==='email')
+        {
+            setTyping(true);
+        }
     };
-    const[typing,setTyping]=useState(false);
+    useEffect(() => {
+      
+            if(password==confirmpassword)
+            {
+                setPasswordsMatch(true)
+                console.log("set true",password,confirmpassword);
+            }
+            else
+            {
+                console.log("set false",password,confirmpassword);
+                setPasswordsMatch(false)
+            }
+    }, [confirmpassword])
+    
+   
 
    const call = ()=>{
     checkEmail({email});
@@ -38,17 +58,12 @@ const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}
    }
     const onSubmit = (event) =>{
         event.preventDefault();
-        if(password !== confirmpassword)
-        {
-            console.log("Passwords do not Match");
-        }else{
-            console.log(formData);
-            register({name,email,password});
-        }
+        register({name,email,password});
     }
     if(isAuthenticated)
     {
-        return <Redirect to="/dashboard" />
+        return history.push('/feed');
+        // return <Redirect to="/dashboard" />
     }
 
     return (
@@ -63,20 +78,21 @@ const Register = ({register,checkEmail,auth:{isAuthenticated,alreadyRegistered}}
                             <div style={{ color:'grey',marginBottom:'2vh' }}>Sign up to explore Dev community</div>
                             <Form >
                                 <Form.Group controlId="formBasicName">
-                                    <Form.Control required name="name"  value={name} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="text" placeholder="Name" />
+                                    <Form.Control required name="name"  value={name} onChange={(event)=>onChangeInput(event)} style={{ backgroundColor:'whitesmoke' }} type="text" placeholder="Name" />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
-                                    <Form.Control required name="email"  value={email} onChange={(event)=>{return onChange(event)}} onBlur={call}   style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
+                                    <Form.Control required name="email"  value={email} onChange={(event)=>{return onChangeInput(event)}} onBlur={call}   style={{ backgroundColor:'whitesmoke' }} type="email" placeholder="Email" />
                                     {alreadyRegistered && !typing ? <div style={{color:'red',textAlign:'left'}}>This email is already registered</div>:null}
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Control required name="password"  value={password} onChange={(event)=>onChange(event)}  style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
+                                    <Form.Control required name="password"  value={password} onChange={(event)=>onChangeInput(event)}  style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Password" />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicConfirmPassword">
-                                    <Form.Control required name="confirmpassword"  value={confirmpassword} onChange={(event)=>onChange(event)} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Confirm Password" />
+                                    <Form.Control required name="confirmpassword"  value={confirmpassword} onChange={(event)=>{ return onChangeInput(event)}} style={{ backgroundColor:'whitesmoke' }} type="password" placeholder="Confirm Password" />
+                                    { passwordsMatch===false ? <div style={{color:'red',textAlign:'left'}}>Passwords do not match</div>:null}
                                 </Form.Group>
-
-                                <Button variant="primary"  type="button" block onClick={(event) => onSubmit(event)}>
+                                
+                                <Button variant="primary" disabled={passwordsMatch===false || password==='' || confirmpassword===''} type="button" block onClick={(event) => onSubmit(event)}>
                                     Sign Up
                                 </Button>
                             </Form>
@@ -108,5 +124,5 @@ const mapStateToProps= state =>({
     auth:state.auth
 })
 
-export default connect(mapStateToProps,{register,checkEmail})(Register);
+export default connect(mapStateToProps,{register,checkEmail})(withRouter(Register));
  

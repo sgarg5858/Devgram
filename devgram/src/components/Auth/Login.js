@@ -6,36 +6,42 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import {Link,Redirect} from 'react-router-dom';
+import {Link,Redirect,withRouter} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {login} from '../../store/actions/Auth'
 import Alert from 'react-bootstrap/Alert'
 
-const Login = ({login,auth:{isAuthenticated}}) => {
+const Login = ({login,auth:{isAuthenticated},history}) => {
 
+    //Array Destructuring
     const[formData,setFormData]=useState({
         email:'',
         password:''
     });
-
+    
+    //Object Destructuring
     const{email,password}=formData;
 
+    //Another state hook
     const[submitted,setSubmitted]=useState(false);
 
     var t;
 
    const onSubmit= (event) =>{
         event.preventDefault();
-        console.log({email,password});
+
+        // console.log({email,password});
         
         login({email,password});
+
         t=setTimeout(()=>{
             setSubmitted({
                 submitted:true
             });
-        },700)
+        },1500)
     }
 
+    //State updation is immutable
   const  onChange= (event) =>{
         setFormData({
             ...formData,
@@ -46,13 +52,14 @@ const Login = ({login,auth:{isAuthenticated}}) => {
     if(isAuthenticated)
     {
         clearTimeout(t);
-       return <Redirect to="/dashboard" />
+        history.push('/feed')
+    //    return <Redirect to="/feed" />
     }
 
     return (
         <Container fluid>
             <Row>
-                <Col lg={{span:4,offset:4}} md={{span:6,offset:3}} sm={{span:8,offset:2}} xs={{span:10,offset:1}}>
+                <Col lg={{span:4,offset:4}} md={{span:4,offset:4}} sm={{span:6,offset:3}} xs={{span:10,offset:1}}>
                 <div style={{marginTop:'20vh'}}>
                 { submitted && !isAuthenticated ? <Alert variant="danger" style={{textAlign:'center'}} onClose={()=>setSubmitted(false)} dismissible >Incorrect Username or Password</Alert> :null}
                 <Card style={{ width: '100%',textAlign:'center' }}>
@@ -104,5 +111,5 @@ const mapStateToProps= state =>({
     auth:state.auth
 })
 
-export default connect(mapStateToProps,{login})(Login);
+export default connect(mapStateToProps,{login})(withRouter(Login));
  

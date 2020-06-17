@@ -23,14 +23,16 @@ export default function(state=initialState,action)
                 ...state,
                 ...payload,
                 isAuthenticated:true,
-                isLoading:false
+                isLoading:false,
+                alreadyRegistered:false
             };
         case USER_SUCCESS:
             return{
                 ...state,
                 user:payload,
                 isLoading:false,
-                isAuthenticated:true
+                isAuthenticated:true,
+                alreadyRegistered:false
             }
         case ALREADY_REGISTERED:
             return{

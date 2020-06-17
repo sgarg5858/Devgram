@@ -17,7 +17,7 @@ const DevNavbar = ({isAuthenticated,logout,history}) => {
               <Navbar.Collapse  id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                   <Nav.Link><Link style={{ color: 'white' }} to="/feed">Feed</Link></Nav.Link>
-                  <Nav.Link ><Link style={{ color: 'white' }} to="/dashbaord">Dashboard</Link></Nav.Link>
+                  <Nav.Link ><Link style={{ color: 'white' }} to="/dashboard">Dashboard</Link></Nav.Link>
                   <Nav.Link><Link style={{ color: 'white' }} to="/community">Community</Link></Nav.Link>
 
                 </Nav>
