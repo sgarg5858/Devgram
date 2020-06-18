@@ -33,9 +33,9 @@ app.use('/api/profile',require('./routes/profile'));
 app.use('/api/post', require('./routes/post'));
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('./devgram/build'));
+    app.use(express.static('../devgram/build'));
     app.get('*',(req,res,next)=>{
-        res.sendFile(path.resolve(__dirname,'devgram','build','index.html'))
+        res.sendFile(path.resolve(__dirname,'..','devgram','build','index.html'))
     })
 }
 
